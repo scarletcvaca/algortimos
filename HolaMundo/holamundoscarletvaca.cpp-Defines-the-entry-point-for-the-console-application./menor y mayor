@@ -1,0 +1,65 @@
+// mayor y menor.cpp : Defines the entry point for the console application.
+//
+
+#include <iostream>
+#include "conio.h"
+#define MAX 100
+
+using namespace std;
+
+void cargar_vec(int vec[],int n);
+void mostrar_vec(int vec[],int n);
+int mostrar_mayor(int vec[],int n);
+int mostrar_menor(int vec[],int n);
+
+void main()
+{int vec[MAX],n,mayor,menor;
+cout<<"Ingrese el tamanho del vector:"<<endl;
+cin>>n;
+cargar_vec(vec,n); // primero se pone cargar
+mostrar_vec(vec,n);
+mayor=mostrar_mayor(vec,n);
+menor=mostrar_menor(vec,n);
+cout<<endl<<"El mayor es: "<<mayor<<endl;
+cout<<endl<<"El menor es: "<<menor<<endl;
+getch();
+}
+
+void cargar_vec(int vec[],int n)
+{	int i;
+	for(i=0;i<n;i++){
+		cout<<"Ingrese vec["<<i<<"]: ";
+		cin>>vec[i];
+	}
+}
+
+void mostrar_vec(int vec[],int n)
+{	int i;
+	for(i=0;i<n;i++){
+		cout<<" "<<vec[i];
+	}
+}
+
+int mostrar_mayor(int vec[],int n)
+{ int i,mayor;
+	mayor=vec[0];
+	for(i=0;i<n;i++)
+	{
+		if(vec[i]>mayor){
+		mayor=vec[i];
+		}
+	}
+return(mayor);
+}
+
+int mostrar_menor(int vec[],int n)
+{ int i,menor=vec[0];
+	for(i=0;i<n;i++)
+	{
+		if(vec[i]<menor){
+		menor=vec[i];
+		}
+		
+	}
+	return(menor);
+}
