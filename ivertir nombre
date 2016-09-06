@@ -1,0 +1,38 @@
+#include "stdafx.h"
+#include <iostream>
+#include <string>//cadena de caacteres
+#include <stdlib.h> //system ("pause")
+#define tam 100
+using namespace std;
+
+int main()
+{
+   int total;
+   string nombres[tam], nombre, apellido, continuar;
+   unsigned int encontro; // una bvandera de posicion 
+   do{
+      cout << "ingrese el numero de nombres: ";
+      cin >> total;
+   } while (!(total>0)&&(total <=tam));  //que no sea negatuivo y no salga del tamaño ; while ((total<=0)||(total >tam));
+   cin.ignore(); // ingnora lo que tenias antes 
+   for (int i = 0; i < total; i++)
+   {
+      cout << "Ingrese el " << i + 1 << " nombre: ";
+      getline(cin, nombres[i]); //cin con streing lee solo hasta que encuentra un espacion y ya no se usa cin solo getline
+    }//pide los nombres 
+    cout << "\nResultados\n"; //imprime resultados 
+    for (int i = 0; i < total; i++)
+    {
+       encontro = nombres[i].find(' ', 0); //find encuentra el caracter espacio scarlet vaca ,devulve 
+       if (encontro != string::npos) 
+       {
+           nombre = nombres[i].substr(0, encontro);
+           apellido = nombres[i].substr(encontro + 1,nombres[i].length());// length tamaño de la cadena -substr desde una posicion inicial hasta una final -string enconto +1 hasta
+           cout << apellido << ". ";
+           cout << nombre << endl;
+       }
+     }
+
+    system("pause");
+    return 0;
+}
