@@ -1,0 +1,82 @@
+#include "stdafx.h"
+#include "conio.h"
+#include <iostream>
+#include <string>
+using namespace std;
+bool bisiesto(int anho);      
+bool fecha_valida(int dia,int mes,int anho);
+
+void main (){
+	string fecha;
+	int dia ,mes ,anho;
+	cout<<"ingrese la cadena en el formato de dd/mm/yyyy---->>>: ";
+	getline(cin,fecha);
+	if (fecha.length()!=10)//
+	   cout<<"Dato invalido";
+	if ((fecha.at(2)!='/')||(fecha.at(5)!='/'))
+		cout<<"caracter invalido:";
+
+	dia=atoi(fecha.substr(0,2).c_str());
+	mes=atoi(fecha.substr(3,2).c_str());
+	anho=atoi(fecha.substr(6,4).c_str());
+	
+	cout<<"dia: "<<dia<<endl;
+	cout<<"mm: "<<mes<<endl;
+	cout<<"yyyy: "<<anho<<endl;
+
+	if (fecha_valida(dia,mes,anho))
+		cout<< "Fecha Valida";
+	else
+	    cout<< "Fecha invalida";
+	getch();
+}
+
+bool bisiesto(int anho)
+{
+	if ((anho % 100==0) && (anho% 400==0))
+	 return (true);
+	
+	if (anho % 4==0)
+	  return (true); 
+	else 
+		return (false);
+}
+
+bool fecha_valida(int dia,int mes,int anho)
+{
+	if((anho>0) && ( anho< 10000))
+	{ if((mes>0)&&(mes<=12))
+		{ if(mes==1 || mes ==3 || mes == 5 || mes==7 || mes==8 || mes == 10 || mes ==12)
+			{ if((dia>0)&&(dia<32))
+				{ return (true);
+				}
+			else { return (false);}
+			}
+		else { if(bisiesto(anho)== true)
+				{
+					if(mes==2)
+					{ 
+						if((dia>0)&&(dia<30))
+						{
+							return (true);
+						}
+					else
+						{	
+							return (false);
+						
+						}
+				}
+					else{ if((dia>0)&&(dia<31))
+							{ return (true);
+								}
+					else { return (false);
+					}
+				}
+	}
+		}
+	}
+	}else{return (false);}
+}
+
+	
+
