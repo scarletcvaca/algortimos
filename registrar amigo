@@ -1,0 +1,144 @@
+#include "iostream"
+#include "stdio.h"
+#include "string.h"
+#include "conio.h"
+
+using namespace std;
+
+struct regAmigo
+{
+	char nombre[30];
+	int edad;
+	char sexo;
+};
+
+void CrearArchivo (char nomArchivo[])
+{FILE *ptr;
+ ptr=fopen(nomArchivo,"wb");
+ fclose(ptr);
+}
+
+void adicionarAmigo()
+{FILE *ptr;
+ regAmigo reg;
+ cout<<"Introducir Nombre: ";
+ do
+ {gets(reg.nombre);
+ }while(strlen(reg.nombre)==0);
+ do
+ {cout<<"Edad: ";
+  cin>>reg.edad;
+ }while(reg.edad<=0 || reg.edad>150);
+
+ do
+ {cout<<"Sexo <F/M> : ";
+  cin>>reg.sexo;
+ }while((reg.sexo!= 'F') && (reg.sexo != 'M'));
+ ptr=fopen("amigos.dat","ab"); //abre archivo para adicionar datos
+ fwrite(&reg,sizeof(reg),1,ptr); //escribe un registro en el archivo 
+ fclose(ptr); //cierra archivo
+}
+
+void mostrar()
+{FILE *ptr;
+ regAmigo reg;
+ ptr=fopen("amigos.dat","rb"); // abre archivo para leer
+ if(ptr!=NULL)
+ {fread(&reg,sizeof(reg),1,ptr); //lee un registro en el archivo
+  while(feof(ptr)==false) // mientras no sea el final del archivo feof()
+  {cout<<"\nNombre: "<<reg.nombre;
+   cout<<"\nEdad: "<<reg.edad;
+   cout<<"\nSexo: "<<reg.sexo;
+   cout<<"\n";
+   fread(&reg,sizeof(reg),1,ptr); // lee un registro en el archivo
+  }
+  fclose(ptr); // cierra archivo
+ }
+ else 
+ {cout<<"El Archivo no Existe!";
+ }
+}
+
+void promedioEdades()
+{int s=0,c=0;
+ FILE *ptr;
+ regAmigo reg;
+ ptr=fopen("amigos.dat","rb");
+ if(ptr!=NULL)
+ {fread(&reg,sizeof(reg),1,ptr); //lee un registro en el archivo
+  while(feof(ptr)==false) // mientras no sea el final del archivo feof()
+  {s=s+reg.edad; // acumula edad
+   c++;  // cuenta cuantas personas
+   fread(&reg,sizeof(reg),1,ptr); // lee un registro en el archivo
+  }
+  fclose(ptr); // cierra archivo
+  if(c>0)
+  {cout<<"\nLa edad promedio es: "<<s/c;
+  }
+  else
+  {cout<<"\nNo hay DATOS!";
+  }
+ }
+ else 
+ {cout<<"\nEl Archivo no Existe!";
+ }
+
+}
+
+void mostrarAmigoMayor()
+{int may=0;
+ char nombreMayor[30];
+FILE *ptr;
+regAmigo reg;
+ptr=fopen("amigos.dat","rb");
+ if(ptr!=NULL)
+ {fread(&reg,sizeof(reg),1,ptr); //lee un registro en el archivo
+  while(feof(ptr)==false) // mientras no sea el final del archivo feof()
+  {if(reg.edad>may)
+   {may=reg.edad;
+   }
+   fread(&reg,sizeof(reg),1,ptr); // lee un registro en el archivo
+  }
+  cout<<"\n\nLa edad mayor es: "<<may;
+  rewind(ptr); // vuelve al puntero al inicio del archivo
+  fread(&reg,sizeof(reg),1,ptr); // lee un registro en el archivo
+  while(feof(ptr)==false) // mientras no sea el final del archivo feof()
+  {if(reg.edad==may)
+   {cout<<"\nNombre: "<<reg.nombre<<"\tEdad: "<<reg.edad;
+   }
+   fread(&reg,sizeof(reg),1,ptr); // lee un registro en el archivo
+  }
+  fclose(ptr); // cierra archivo
+ }
+ else 
+ {cout<<"\nEl Archivo no Existe!";
+ }
+}
+
+void main ()
+{int opcion;
+ do{
+	 cout<<"\n\n\t*****MENU*****";
+	 cout<<"\n1.- Crear Archivo";
+	 cout<<"\n2.- Adicionar Amigo";
+	 cout<<"\n3.- Listado de Amigos";
+	 cout<<"\n4.- Mostrar Promedio de Edad";
+	 cout<<"\n5.- Edad Mayor";
+	 cout<<"\n0.- Salir";
+	 cout<<"\nSeleccione una Opcion:";
+	 cin>>opcion;
+	 switch(opcion)
+	 {case 1: CrearArchivo("amigos.dat");
+				break;
+	 case 2:  adicionarAmigo();
+				break;
+	 case 3:  mostrar();
+				break;
+	 case 4:  promedioEdades();
+				break;
+	 case 5:  mostrarAmigoMayor();
+				break;
+
+	 }
+   }while(opcion!=0);
+}
