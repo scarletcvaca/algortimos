@@ -1,0 +1,51 @@
+#include "stdafx.h"
+#include "conio.h"
+#include <iostream>
+#include <stdio.h>
+#include <string>
+
+using namespace std;
+
+
+struct carro
+
+{
+	string placa;
+	string modelo;
+	string ciudad;
+	int año;
+	string paiz;
+	string marca;
+
+
+};
+
+void main ()
+{
+	FILE *ptr;
+	carro reg;
+	ptr=fopen("carro.dat","w+b");
+	cout<<"ingrese el numero de placa ";
+	getline(cin,reg.placa);
+
+	cout<<"ingrese el modelo ";
+	getline(cin,reg.modelo);
+
+	cout<<"ingrese la ciudad  ";
+	getline(cin,reg.ciudad);
+
+	cout<<"ingrese el paiz ";
+	getline(cin,reg.paiz);
+
+	cout<<"ingrese el numero de marca";
+	getline(cin,reg.marca);
+
+	cout<<"infrese el año";
+	cin>>reg.año;
+
+	fwrite(&reg,sizeof(reg),1,ptr);
+	fclose(ptr);
+}
+
+
+
